@@ -1,56 +1,57 @@
-import React from "react";
-import { Link, Outlet } from 'react-router-dom'
-import { Badge, TabBar } from 'antd-mobile'
+import React,{FC} from "react";
+import { useNavigate, Outlet,useLocation } from 'react-router-dom'
+import { TabBar } from 'antd-mobile'
 import {
-    AppOutline,
-    MessageOutline,
-    MessageFill,
-    UnorderedListOutline,
     UserOutline,
 } from 'antd-mobile-icons'
-import styles from './index.less'
+import styles from './index.module.less'
+import './index.module.less'
 const tabs = [
     {
-        key: 'home',
+        key: '/home',
         title: '首页',
-        icon: <AppOutline />,
-        badge: Badge.dot,
+        icon: <i className="iconfont icon-shouye1" />,
+
     },
     {
-        key: 'todo',
-        title: '我的待办',
-        icon: <UnorderedListOutline />,
-        badge: '5',
+        key: '/home/list',
+        title: '找房',
+        icon: <i className="iconfont icon-chazhaofangyuan" />,
+
     },
     {
-        key: 'message',
-        title: '我的消息',
-        icon: (active) =>
-            active ? <MessageFill /> : <MessageOutline />,
-        badge: '99+',
+        key: '/home/news',
+        title: '咨讯',
+        icon: <i className="iconfont icon-zixun" />,
     },
     {
-        key: 'personalCenter',
-        title: '个人中心',
+        key: '/home/profile',
+        title: '我的',
         icon: <UserOutline />,
     },
 ]
-export default class Home extends React.Component {
 
-    render() {
-        return (<div>首页
-            <Link to="news">新</Link>
-
-            <Outlet />
-            {/* TabBar */}
-            <div className={styles.bottom}>
-            <TabBar >
-                {tabs.map(item => (
-                    <TabBar.Item key={item.key} icon={item.icon} title={item.title} ></TabBar.Item>
-                ))}
-            </TabBar>
-            </div>
-            
-        </div>)
+const Bottom :FC= () => {
+    let navigate=useNavigate()
+    const location=useLocation()
+    const {pathname}=location
+    const setRouteActive=(value:string)=>{
+        navigate(value)
     }
+    return (<div className={styles.app}>
+        {/* <Link to="news" className="top">新</Link> */}
+        <div className={styles.body}>
+            <Outlet />
+        </div>
+
+        {/* TabBar */}
+
+        <TabBar className={styles.bottom} activeKey={pathname} onChange={value=>setRouteActive(value)}>
+            {tabs.map(item => (
+                <TabBar.Item key={item.key} icon={item.icon} title={item.title}></TabBar.Item>
+            ))}
+        </TabBar>
+    </div>)
+
 }
+export default Bottom

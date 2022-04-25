@@ -1,9 +1,7 @@
 html,body {
-  height: 100%;
   font-family: 'Microsoft YaHei';
- 
- color: #333;
- background-color: #fff;
+ color: #f6f5f6;
+ background: inherit;
 }
 
 *{
@@ -11,9 +9,9 @@ html,body {
   margin: 0;
   padding: 0;
 }
-.app {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
+html,body,#root,.App{
+  height: 100%;
+}
+li{
+  list-style: none;
 }
